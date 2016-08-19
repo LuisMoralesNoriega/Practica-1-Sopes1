@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h1= title
+    form(name="registro", method="post", action="/")
+        div.input
+            span.label Nombre
+            input(type="text", name="Nombre")
+        div.input
+            span.label Clave
+            input(type="text", name="Clave")
+        div.actions
+            input(type="submit", value="add")
