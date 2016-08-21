@@ -4,3 +4,29 @@ extends layout
 block content
     h1= title
     p Bienvenidos Practica 1 Sistemas Operativos 1 #{title}
+    div#prueba
+    div
+        form(name="infomen", method="get", action="/memoria")
+            div.actions
+                input(type="submit", value="Memoria")
+
+
+        form(name="infocpu", method="get", action="/cpu")
+            div.actions
+                input(type="submit", value="cpu")
+
+    // Header
+    #banner  
+    #featured
+        .container
+        .row
+            div(style='text-align:center;')
+                h2 Resumen de Procesos
+
+    #buttonSection
+        div(style='text-align:center;')
+        #tableProc
+
+        #tablePrint
+    script(src='/socket.io/socket.io.js')
+    script(src='/javascripts/procesos.js')

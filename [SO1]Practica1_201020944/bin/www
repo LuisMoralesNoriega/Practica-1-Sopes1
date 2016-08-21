@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+
+
 /**
  * Module dependencies.
  */
@@ -7,6 +9,10 @@
 var app = require('../app');
 var debug = require('debug')('[SO1]Practica1_201020944:server');
 var http = require('http');
+var server = http.createServer(app);
+var io = require("socket.io")(server);
+var fs = require('fs');
+var exec = require('child_process').exec;
 
 /**
  * Get port from environment and store in Express.
@@ -15,17 +21,21 @@ var http = require('http');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+
 /**
  * Create HTTP server.
  */
 
 var server = http.createServer(app);
+app.io.attach(server);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port, function () {
+  console.log('servido corriendo en el puerto ' + port);
+});
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -88,3 +98,148 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+
+//nuevo
+app.io.on('connection',function (socket) {
+
+    socket.on('peticionproc',function () {
+
+        console.log("Procesando peticion de Resumen de Procesos");
+        proceso=1;
+        numProc=1;
+        procesosDormidos=0;
+        procesosZombie=0;
+        procesosRunning=0;
+        procesosDetenidos=0;
+        json="\"procesos\":[\n";
+
+        while(proceso<=75000){
+            try{
+                var data = fs.readFileSync('/proc/'+proceso+'/status').toString();
+                //console.log(data);
+
+                if(proceso>1) {
+                    json = json + ",\n";
+                }
+
+                var contenido = data.split("\n");
+                //console.log(contenido[0]);
+
+                var name = contenido[0].split(":");
+                name[1]=name[1].replace('	','');
+                //console.log("NAME: " + name[1]);
+
+                var estado = contenido[1].split(":");
+                estado[1]=estado[1].replace('	','');
+                //console.log("ESTADO: " + estado[1]);
+
+                /*VERIFICANDO ESTADO*/
+                var estado2 = estado[1].split(" ");
+                if(estado2[0]=="S"){ //SLEEPING
+                    procesosDormidos++;
+                }
+                if(estado2[0]=="R"){ //RUNNING
+                    procesosRunning++;
+                }
+                if(estado2[0]=="T"){ //STOPPED
+                    procesosDetenidos++;
+                }
+                if(estado2[0]=="Z"){ //ZOMBIE
+                    procesosZombie++;
+                }
+
+
+                var pid = contenido[4].split(":");
+                pid[1]=pid[1].replace("	","");
+                //console.log("PID: " + pid[1]);
+
+                var ram = contenido[16].split(":");
+                ram[1]= ram[1].replace('	','');
+                //console.log("RAM: " + ram[1]);
+                //console.log("--------------");
+
+                var usuario = "USER";
+
+                json = json + "{\"pidProc\":\"" + pid[1] + "\", " + "\"user\":\"" + usuario + "\", " + "\"state\":\"" + estado[1] + "\", " + "\"ram\":\"" + ram[1] + "\", " + "\"nameProc\":\"" + name[1] + "\"}";
+                numProc++;
+            }
+            catch(Exception)
+            {
+                //console.log("error")
+            }
+            proceso=proceso+1;
+        }
+        json = json + "\n]"
+        //console.log(json);
+        json = '{' + json + '}';
+
+        var obj = JSON.parse(json);
+
+        console.log(obj.procesos[1].pidProc);
+        console.log("NUMPROC: "+numProc);
+        socket.emit("resproc", obj, procesosRunning,procesosDormidos,procesosDetenidos,procesosZombie);
+
+
+    });
+
+
+    socket.on("matarproc", function(numeroProceso){
+        var cmd = 'kill '+numeroProceso;
+        console.log("Matando proceso "+numeroProceso)
+
+        exec(cmd, function(error, stdout, stderr) {
+            // command output is in stdout
+        });
+    });
+
+
+    socket.on('infocpu', function(){
+        var cmd = 'mpstat -P ALL';
+
+        exec(cmd, function(error, stdout, stderr) {
+            //console.log(stdout);
+            var contenido = stdout.split("\n");
+            //console.log("Contenido 0: " +contenido[3]);
+            var detalles = contenido[3].split("   ");
+            console.log("IDLE " + detalles[11]);
+
+            var usoCPU = 100- detalles[11];
+
+            socket.emit('rescpu', usoCPU);
+
+        });
+    });
+
+
+    socket.on('inforam', function(){
+        try {
+            var data = fs.readFileSync('/proc/meminfo').toString();
+
+            var contenido = data.split("\n");
+
+            var memtotal = contenido[0].split(":");
+            memtotal[1]=memtotal[1].replace("kB","");
+
+            var memfree = contenido[2].split(":");
+            memfree[1]=memfree[1].replace("kB","");
+
+            var memOcupada = memtotal[1] - memfree[1];
+
+            var memOcupadaPorcentaje = memOcupada/memtotal[1];
+            memOcupadaPorcentaje = memOcupadaPorcentaje*100;
+
+
+            console.log("Porcentaje Memoria Ram Usada: " + memOcupadaPorcentaje);
+
+            socket.emit('resram',memOcupadaPorcentaje, memtotal[1], memOcupada);
+
+
+        }catch(Excpetion){
+
+        }
+    });
+
+
+
+});

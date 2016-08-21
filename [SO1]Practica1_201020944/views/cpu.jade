@@ -1,0 +1,16 @@
+//
+   Created by luis on 21/08/16.
+extends layout
+
+
+
+body
+    block content
+        h1 Monitor CPU
+
+        h3 Porcentaje de consumo de cpu
+        div#porcentaje
+
+
+        script(src='/socket.io/socket.io.js')
+        script(src='/javascripts/infocpu.js')

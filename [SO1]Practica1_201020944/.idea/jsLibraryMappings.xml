@@ -2,6 +2,8 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$" libraries="{[SO1]Practica1_201020944/node_modules}" />
+    <file url="PROJECT" libraries="{socket.io-DefinitelyTyped, socket.io-client-DefinitelyTyped}" />
     <includedPredefinedLibrary name="Node.js Core" />
+    <includedPredefinedLibrary name="[SO1]Practica1_201020944/node_modules" />
   </component>
 </project>
