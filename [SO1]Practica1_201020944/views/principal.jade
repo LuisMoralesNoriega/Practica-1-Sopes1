@@ -1,32 +1,179 @@
 //Created by luis on 18/08/16.
-extends layout
+//extends layout
 
-block content
-    h1= title
-    p Bienvenidos Practica 1 Sistemas Operativos 1 #{title}
-    div#prueba
-    div
-        form(name="infomen", method="get", action="/memoria")
-            div.actions
-                input(type="submit", value="Memoria")
+doctype html
+html.no-js(lang='en')
+   head
+     meta(charset='utf-8')
+     meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+     meta(name='description', content='')
+     meta(name='author', content='')
+     //if IE
+     meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+     title Practica 1
+     // BOOTSTRAP CORE CSS
+     link(href='stylesheets/light-wave/template/assets/css/bootstrap.css', rel='stylesheet')
+     // ION ICONS STYLES
+     link(href='stylesheets/light-wave/template/assets/css/ionicons.css', rel='stylesheet')
+     // FONT AWESOME ICONS STYLES
+     link(href='stylesheets/light-wave/template/assets/css/font-awesome.css', rel='stylesheet')
+     // FANCYBOX POPUP STYLES
+     link(href='stylesheets/light-wave/template/assets/js/source/jquery.fancybox.css', rel='stylesheet')
+     // STYLES FOR VIEWPORT ANIMATION
+     link(href='stylesheets/light-wave/template/assets/css/animations.min.css', rel='stylesheet')
+     // CUSTOM CSS
+     link(href='stylesheets/light-wave/template/assets/css/style-red.css', rel='stylesheet')
+     // HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries
+     // WARNING: Respond.js doesn't work if you view the page via file://
+     //if lt IE 9
+     script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+     script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+   body(data-spy='scroll', data-target='#menu-section')
+     // MENU SECTION START
+     #menu-section.navbar.navbar-inverse.navbar-fixed-top.scroll-me
+       .container
+         .navbar-header
+           button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+             span.icon-bar
+             span.icon-bar
+             span.icon-bar
+           a.navbar-brand(href='#')
+             | SOPES 1 PRACTICA 1
+         .navbar-collapse.collapse
+             ul.nav.navbar-nav.navbar-right
+                 li
+                     a(href='#principal') PRINCIPAL
+                 li
+                     a(href='#services') CPU
+                     form(name="infocpu", method="get", action="/cpu")
+                         div.actions
+                         input(type="submit", value="cpu")
+                 li
+                     a(href='#monitormem') MEMORIA RAM
+                     form(name="infomen", method="get", action="/memoria")
+                         div.actions
+                         input(type="submit", value="Memoria")
+                 li
+                     a(href='#acercade') ACERCADE
+     // MENU SECTION END
+     // HOME SECTION START
+     #principal
+       .container
+         .row
+           .col-sm-8.col-sm-offset-2.col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2
+             #carousel-slider.carousel.slide.animate-in(data-ride='carousel', data-anim-type='fade-in-up')
+               .carousel-inner
+                 .item.active
+                   h3
+                     | Monitor de Procesos
+                   p
+                       #tableProc
+                 .item
+                   h3
+                     | Monitor de Procesos
+                   p
+                       #tableProc1
 
+         .row.animate-in(data-anim-type='fade-in-up')
+           .col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3.col-lg-8.col-lg-offset-2.scroll-me
+             h4
+               p
+               | Visor de Procesos
+               #tablePrint
 
-        form(name="infocpu", method="get", action="/cpu")
-            div.actions
-                input(type="submit", value="cpu")
+     // HOME SECTION END
+     // SERVICE SECTION START
+     section#services
+       .container
+         .row.text-center.header
+           .col-xs-12.col-sm-12.col-md-12.col-lg-12.animate-in(data-anim-type='fade-in-up')
+             h3 Monitor de CPU
+             hr
+         .row.animate-in(data-anim-type='fade-in-up')
+           .col-xs-12.col-sm-4.col-md-4.col-lg-4
+             .services-wrapper
+               i.ion-clipboard
+               h3 Datos de CPU
+               | Porcentaje de Consumo de cpu
+           .col-xs-12.col-sm-4.col-md-4.col-lg-4
+             .services-wrapper
+               i.ion-monitor
+               h3 Grafica
 
-    // Header
-    #banner  
-    #featured
-        .container
-        .row
-            div(style='text-align:center;')
-                h2 Resumen de Procesos
+     // SERVICE SECTION END
+     // PRICING SECTION START
+     section#monitormem
+       .container
+         .row.text-center.header.animate-in(data-anim-type='fade-in-up')
+           .col-xs-12.col-sm-12.col-md-12.col-lg-12
+             h3 Monitor de Momoria Ram
+             hr
+         .row.pad-bottom.animate-in(data-anim-type='fade-in-up')
+           .col-xs-12.col-sm-10.col-sm-offset-1.col-md-10.col-md-offset-1.col-lg-10.col-lg-offset-1
+             .row.db-padding-btm.db-attached
+               .col-xs-12.col-sm-3.col-md-3.col-lg-3
+                 .light-pricing
+                   .price
+                     sup Datos de Memoria
+                     small RAM
+                   .type
+                     | Informacion
+                   ul
+                     li
+                       i.glyphicon.glyphicon-print
+                       | Total de memoria del servicio
+                     li
+                       i.glyphicon.glyphicon-time
+                       | Total Consumida
+                     li
+                       i.glyphicon.glyphicon-trash
+                       | Porcentaje de Memoria
+               .col-xs-12.col-sm-3.col-md-3.col-lg-3
+                 .light-pricing.popular
+                   .price
+                     sup Grafica
+                     small RAM
+                   ul
 
-    #buttonSection
-        div(style='text-align:center;')
-        #tableProc
+     // PRIICING SECTION END
+     // CONTACT SECTION START
+     section#acercade
+       .container
+         .row.text-center.header.animate-in(data-anim-type='fade-in-up')
+           .col-xs-12.col-sm-12.col-md-12.col-lg-12
+             h3 Acerca de
+             hr
+         .col-lg-5.col-lg-offset-4.col-md-10.col-md-offset-2.col-sm-10.col-sm-offset-2.col-xs-12
+           .contact-wrapper(,='', aling='center')
+             h3 Autor
+             h4
+               strong Nombre :
+               |  Luis Aroldo Morales Noriega
+             h4
+               strong Carne :
+               |  201020944
+             h4
+               strong Curso :
+               |  Sistemas Operativos 1
+     // CONTACT SECTION END
+     // JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME
+     // CORE JQUERY
+     script(src='stylesheets/light-wave/template/assets/js/jquery-1.11.1.js')
+     // BOOTSTRAP SCRIPTS
+     script(src='stylesheets/light-wave/template/assets/js/bootstrap.js')
+     // EASING SCROLL SCRIPTS PLUGIN
+     script(src='stylesheets/light-wave/template/assets/js/vegas/jquery.vegas.min.js')
+     // VEGAS SLIDESHOW SCRIPTS
+     script(src='stylesheets/light-wave/template/assets/js/jquery.easing.min.js')
+     // FANCYBOX PLUGIN
+     script(src='stylesheets/light-wave/template/assets/js/source/jquery.fancybox.js')
+     // ISOTOPE SCRIPTS
+     script(src='stylesheets/light-wave/template/assets/js/jquery.isotope.js')
+     // VIEWPORT ANIMATION SCRIPTS
+     script(src='stylesheets/light-wave/template/assets/js/appear.min.js')
+     script(src='stylesheets/light-wave/template/assets/js/animations.min.js')
+     // CUSTOM SCRIPTS
+     script(src='stylesheets/light-wave/template/assets/js/custom.js')
 
-        #tablePrint
-    script(src='/socket.io/socket.io.js')
-    script(src='/javascripts/procesos.js')
+     script(src='/socket.io/socket.io.js')
+     script(src='/javascripts/procesos.js')

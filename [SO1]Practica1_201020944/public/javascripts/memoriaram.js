@@ -10,9 +10,9 @@ var socket = io.connect('http://localhost:3000',{'forceNew':true});
 socket.on('resram',function (memPorcentaje, memtotal, memOcupada) {
     line1.append(new Date().getTime(), memPorcentaje);
 
-    document.getElementById('totalservicio').innerHTML = memtotal;
+    document.getElementById('totalservicio').innerHTML = Math.round(memtotal/1024) + ' MB';
 
-    document.getElementById('totalconsumida').innerHTML = memOcupada;
+    document.getElementById('totalconsumida').innerHTML = Math.round(memOcupada/1024) + ' MB';
 
     document.getElementById('porcentaje').innerHTML =  Math.round(memPorcentaje) + '%';
 });

@@ -22,10 +22,8 @@ router.post('/', function (req, res) {
             usuario: req.session.Nombre
         });
     }else{
-        var pagina = '<!doctype html><html><head></head><body>'+
-                     '<p>Datos No Validos</p>'+
-                     '<br><a href= "/" > Regresar </a></body></html>';
-        res.send(pagina);
+        res.render('ErrorSesion');
+        //res.send(pagina);
     }
 
     /*

@@ -38,6 +38,7 @@ socket.on('resproc', function(obj,procesosRunning,procesosDormidos,procesosDeten
 
     myTableProc = myTableProc + "</table>";
     document.getElementById('tableProc').innerHTML = myTableProc;
+    document.getElementById('tableProc1').innerHTML = myTableProc;
 
     var myTable = "<table ID=table1 border='1' style='margin: 0 auto;'>";
     for(var i=0; i<obj.procesos.length; i++){

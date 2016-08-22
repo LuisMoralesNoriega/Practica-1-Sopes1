@@ -1,13 +1,89 @@
-extends layout
+//extends layout
 
-block content
-    h1= title
-    form(name="registro", method="post", action="/")
-        div.input
-            span.label Nombre
-            input(type="text", name="Nombre")
-        div.input
-            span.label Clave
-            input(type="password", name="Clave")
-        div.actions
-            input(type="submit", value="Iniciar Sesion")
+doctype html
+html(lang='en')
+    head
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+        meta(name='description', content='')
+        meta(name='author', content='')
+        //if IE
+        meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+        title Practica 1
+        // BOOTSTRAP CORE CSS
+        link(href='stylesheets/light-wave/main-site/css/bootstrap.css', rel='stylesheet')
+        // CUSTOM CSS
+        link(href='stylesheets/light-wave/main-site/css/style.css', rel='stylesheet')
+        // HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries
+        // WARNING: Respond.js doesn't work if you view the page via file://
+        //if lt IE 9
+        script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+        script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+
+body
+    // HEADER SECTION START
+    section#header
+        .container
+            .row.text-center
+                .col-lg-8.col-lg-offset-2.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2.col-xs-12
+                    h1  Sistemas Operativos 1
+                    p
+                        strong  Practica 1
+                    h4  Planificador de Procesos
+
+
+    // HEADER SECTION END
+    // PREVIEW SECTION START
+    section#preview
+      .container
+        .row.text-center
+          .col-lg-6.col-lg-offset-3.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2.col-xs-12
+            h1 Porfavor Registrese
+        .row
+        .col-lg-6.col-lg-offset-3.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2.col-xs-12
+          .preview-wrapper
+              block content
+                  h1= title
+                  form(name="registro", method="post", action="/")
+                      div.input
+                          span.label Nomb
+                          input(type="text", name="Nombre", placeholder='Nombre')
+                      div.input
+                          span.label Clave
+                          input(type="password", name="Clave", placeholder='Contrasenia')
+                      div.actions
+                          input(type="submit", value="Iniciar Sesion")
+            //a(href='stylesheets/light-wave/template/red.html', target='_blank')
+              img.img-responsive(src='stylesheets/light-wave/main-site/img/previews/3.png', alt='')
+              hr
+              p
+                | Red Color Version ( With slider background )
+    // YES SECTION END
+    // BOTTOM SECTION START
+    section#bottom
+      .container
+        .row.text-center
+          .col-md-12
+            h3 Luis Aroldo Morales Noriega
+            h4 201020944
+        .row.text-center
+          .col-md-12
+    // BOTTOM SECTION END
+    // FOOTER SECTION START
+    footer
+      .container
+        .row.text-center
+          .col-md-12
+            p
+              | © 2016 Universidad De San Carlos de Guatemala
+            p
+              | Escuela de Ciencias y Sistemas
+    // FOOTER SECTION END
+    // JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME
+    // CORE JQUERY SCRIPTS
+    script(src='stylesheets/light-wave/main-site/js/jquery-1.11.1.js')
+    // BOOTSTRAP SCRIPTS
+    script(src='stylesheets/light-wave/main-site/js/bootstrap.js')
+
+
+

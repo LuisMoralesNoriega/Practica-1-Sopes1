@@ -11,10 +11,7 @@ router.get('/principal', function(req, res, next) {
             usuario: req.session.Nombre
         });
     }else{
-        var pagina='<!doctype html><html><head></head><body>'+
-            '<p>Para visualizar esta pagina inicie sesion</p>'+
-            '<br><a href="/">Regresar</a></body></html>';
-        res.send(pagina);
+        res.render('ErrorSesion');
     }
 });
 
@@ -27,10 +24,7 @@ router.post('infomen', function (req, res) {
             usuario: req.session.Nombre
         });
     }else{
-        var pagina = '<!doctype html><html><head></head><body>'+
-            '<p>Datos No Validos</p>'+
-            '<br><a href= "/" > Regresar </a></body></html>';
-        res.send(pagina);
+        res.render('ErrorSesion');
     }
 });
 
@@ -43,10 +37,7 @@ router.post('infocpu', function (req, res) {
             usuario: req.session.Nombre
         });
     }else{
-        var pagina = '<!doctype html><html><head></head><body>'+
-            '<p>Datos No Validos</p>'+
-            '<br><a href= "/" > Regresar </a></body></html>';
-        res.send(pagina);
+        res.render('ErrorSesion');
     }
 });
 
